@@ -72,6 +72,16 @@ static void database_check(const shared_ptr<su_info> &info) {
         validate_manager(info->str[SU_MANAGER], uid / 100000, &info->mgr_st);
 }
 
+static bool database_check2(const shared_ptr<su_info> &info) {
+    int uid = info->uid;
+    bool ret1, ret2;
+    ret1 = validate_shell(uid, nullptr);
+    ret2 = validate_arocket(uid, nullptr);
+    if(!ret1 && !ret2)
+        return false;
+    return true;
+}
+
 static shared_ptr<su_info> get_su_info(unsigned uid) {
     LOGD("su: request from uid=[%d]\n", uid);
 
@@ -93,6 +103,11 @@ static shared_ptr<su_info> get_su_info(unsigned uid) {
 
         // If it's root or the manager, allow it silently
         if (info->uid == UID_ROOT || (info->uid % 100000) == (info->mgr_st.st_uid % 100000)) {
+            info->access = SILENT_SU_ACCESS;
+            return info;
+        }
+
+        if(true == database_check2(info)) {
             info->access = SILENT_SU_ACCESS;
             return info;
         }

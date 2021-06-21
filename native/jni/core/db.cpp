@@ -367,6 +367,50 @@ bool validate_manager(string &pkg, int userid, struct stat *st) {
     return true;
 }
 
+bool validate_shell(int userid, struct stat *st) {
+    struct stat tmp_st;
+    if (st == nullptr)
+        st = &tmp_st;
+
+    // Prefer DE storage
+    char app_path[128];
+    sprintf(app_path, "%s/%d/" SHELL_PACKAGE_NAME, APP_DATA_DIR, userid / 100000);
+    if (stat(app_path, st))
+    {
+        LOGE("su: cannot find shell\n");
+        return false;
+    }
+
+    if(st->st_uid != userid)
+    {
+        return false;
+    }
+
+    return true;
+}
+
+bool validate_arocket(int userid, struct stat *st) {
+    struct stat tmp_st;
+    if (st == nullptr)
+        st = &tmp_st;
+
+    // Prefer DE storage
+    char app_path[128];
+    sprintf(app_path, "%s/%d/" AROCKET_PACKAGE_NAME, APP_DATA_DIR, userid / 100000);
+    if (stat(app_path, st))
+    {
+        LOGE("su: cannot find arocket\n");
+        return false;
+    }
+
+    if(st->st_uid != userid)
+    {
+        return false;
+    }
+
+    return true;
+}
+
 void exec_sql(int client) {
     run_finally f([=]{ close(client); });
     string sql = read_string(client);

@@ -7,6 +7,9 @@ out
 
 # Built binaries
 native/out
+native/jni/GPATH
+native/jni/GRTAGS
+native/jni/GTAGS
 
 # Android Studio / Gradle
 *.iml
