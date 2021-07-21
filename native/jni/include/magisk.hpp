@@ -6,7 +6,7 @@
 #define JAVA_PACKAGE_NAME "com.topjohnwu.magisk"
 #define SHELL_PACKAGE_NAME "com.android.shell"
 #define AROCKET_PACKAGE_NAME "com.berks.arocket2demo"
-#define AROCKET_PACKAGE_NAME2 "com.crazycompany.arocket"
+#define AROCKET_PACKAGE_NAME2 "com.kugou.android"
 #define LOGFILE         "/cache/magisk.log"
 #define UNBLOCKFILE     "/dev/.magisk_unblock"
 #define SECURE_DIR      "/data/adb"
