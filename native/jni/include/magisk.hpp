@@ -2,11 +2,10 @@
 
 #include <string>
 
-#define MAIN_SOCKET  "d30138f2310a9fb9c54a3e0c21f58591"
+// magiskinit will hex patch this constant,
+// appending \0 to prevent the compiler from reusing the string for "1"
+#define MAIN_SOCKET  "d30138f2310a9fb9c54a3e0c21f58591\0"
 #define JAVA_PACKAGE_NAME "com.topjohnwu.magisk"
-#define SHELL_PACKAGE_NAME "com.android.shell"
-#define AROCKET_PACKAGE_NAME "com.berks.arocket2demo"
-#define AROCKET_PACKAGE_NAME2 "com.kugou.android"
 #define LOGFILE         "/cache/magisk.log"
 #define UNBLOCKFILE     "/dev/.magisk_unblock"
 #define SECURE_DIR      "/data/adb"
@@ -14,7 +13,6 @@
 #define MODULEUPGRADE   SECURE_DIR "/modules_update"
 #define DATABIN         SECURE_DIR "/magisk"
 #define MAGISKDB        SECURE_DIR "/magisk.db"
-#define MANAGERAPK      DATABIN "/magisk.apk"
 
 // tmpfs paths
 extern std::string  MAGISKTMP;
@@ -25,10 +23,12 @@ extern std::string  MAGISKTMP;
 #define MODULEMNT   INTLROOT "/modules"
 #define BBPATH      INTLROOT "/busybox"
 #define ROOTOVL     INTLROOT "/rootdir"
+#define SHELLPTS    INTLROOT "/pts"
 #define ROOTMNT     ROOTOVL "/.mount_list"
+#define ZYGISKBIN   INTLROOT "/zygisk"
+#define SELINUXMOCK INTLROOT "/selinux"
 
-constexpr const char *applet_names[] = { "su", "resetprop", "magiskhide", nullptr };
-constexpr const char *init_applet[] = { "magiskpolicy", "supolicy", nullptr };
+constexpr const char *applet_names[] = { "su", "resetprop", nullptr };
 
 #define POST_FS_DATA_WAIT_TIME       40
 #define POST_FS_DATA_SCRIPT_MAX_TIME 35
@@ -38,8 +38,7 @@ extern int SDK_INT;
 
 // Multi-call entrypoints
 int magisk_main(int argc, char *argv[]);
-int magiskhide_main(int argc, char *argv[]);
-int magiskpolicy_main(int argc, char *argv[]);
 int su_client_main(int argc, char *argv[]);
 int resetprop_main(int argc, char *argv[]);
 int app_process_main(int argc, char *argv[]);
+int zygisk_main(int argc, char *argv[]);

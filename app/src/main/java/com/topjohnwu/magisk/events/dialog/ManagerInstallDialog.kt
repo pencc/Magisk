@@ -2,10 +2,10 @@ package com.topjohnwu.magisk.events.dialog
 
 import com.topjohnwu.magisk.R
 import com.topjohnwu.magisk.core.Info
+import com.topjohnwu.magisk.core.di.AppContext
+import com.topjohnwu.magisk.core.di.ServiceLocator
 import com.topjohnwu.magisk.core.download.DownloadService
 import com.topjohnwu.magisk.core.download.Subject
-import com.topjohnwu.magisk.di.AppContext
-import com.topjohnwu.magisk.di.ServiceLocator
 import com.topjohnwu.magisk.view.MagiskDialog
 import java.io.File
 
@@ -25,14 +25,14 @@ class ManagerInstallDialog : MarkDownDialog() {
 
     override fun build(dialog: MagiskDialog) {
         super.build(dialog)
-        with(dialog) {
+        dialog.apply {
             setCancelable(true)
-            applyButton(MagiskDialog.ButtonType.POSITIVE) {
-                titleRes = R.string.install
-                onClick { DownloadService.start(context, Subject.Manager()) }
+            setButton(MagiskDialog.ButtonType.POSITIVE) {
+                text = R.string.install
+                onClick { DownloadService.start(context, Subject.App()) }
             }
-            applyButton(MagiskDialog.ButtonType.NEGATIVE) {
-                titleRes = android.R.string.cancel
+            setButton(MagiskDialog.ButtonType.NEGATIVE) {
+                text = android.R.string.cancel
             }
         }
     }
